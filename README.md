@@ -93,8 +93,6 @@ yarn test:watch
 
 # Modus Create
 
-{replace react-whyupdate in links below with the name of this project}
-
 [Modus Create](https://moduscreate.com) is a digital product consultancy. We use a distributed team of the best talent in the world to offer a full suite of digital product design-build services; ranging from consumer facing apps, to digital migration, to agile development training, and business transformation.
 
 <a href="https://moduscreate.com/?utm_source=labs&utm_medium=github&utm_campaign=react-whyupdate"><img src="https://res.cloudinary.com/modus-labs/image/upload/h_80/v1533109874/modus/logo-long-black.svg" height="80" alt="Modus Create"/></a>
