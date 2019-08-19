@@ -1,9 +1,9 @@
 {
   "name": "@modus/react-whyupdate",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "React hook that displays why a component has re-rendered",
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
+  "main": "dist/cjs/react-whyupdate.js",
+  "module": "dist/esm/react-whyupdate.js",
   "scripts": {
     "build": "rollup -c",
     "lint": "eslint . -f table",
@@ -25,14 +25,14 @@
     "url": "https://github.com/ModusCreateOrg/react-idle/issues"
   },
   "keywords": [
-    "react-idle",
+    "react-whyupdate",
     "react",
     "requestanimationframe",
     "react",
     "reactjs",
     "reactjs",
-    "onidle",
-    "whenidle"
+    "react performance",
+    "rerender"
   ],
   "author": "Grgur Grisogono <grgur@moduscreate.com>",
   "user": "grgur",
