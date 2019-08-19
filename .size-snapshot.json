@@ -22,5 +22,29 @@
     "bundled": 532,
     "minified": 323,
     "gzipped": 231
+  },
+  "dist/esm/@modus/react-whyupdate.js": {
+    "bundled": 2574,
+    "minified": 1179,
+    "gzipped": 645,
+    "treeshaked": {
+      "rollup": {
+        "code": 63,
+        "import_statements": 63
+      },
+      "webpack": {
+        "code": 1080
+      }
+    }
+  },
+  "dist/umd/@modus/react-whyupdate.js": {
+    "bundled": 3736,
+    "minified": 1552,
+    "gzipped": 825
+  },
+  "dist/umd/@modus/react-whyupdate.min.js": {
+    "bundled": 532,
+    "minified": 323,
+    "gzipped": 231
   }
 }

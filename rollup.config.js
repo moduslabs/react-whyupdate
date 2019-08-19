@@ -11,11 +11,13 @@ function isBareModuleId(id) {
   return !id.startsWith('.') && !id.includes(path.join(process.cwd(), 'modules'));
 }
 
+const pkgName = pkg.name.replace('@modus/', '');
+
 const cjs = [
   {
     input: 'src/index.js',
     output: {
-      file: `dist/cjs/${pkg.name}.js`,
+      file: `dist/cjs/${pkgName}.js`,
       sourcemap: true,
       format: 'cjs',
       esModule: false,
@@ -31,7 +33,7 @@ const cjs = [
   },
   {
     input: 'src/index.js',
-    output: { file: `dist/cjs/${pkg.name}.min.js`, sourcemap: true, format: 'cjs' },
+    output: { file: `dist/cjs/${pkgName}.min.js`, sourcemap: true, format: 'cjs' },
     external: isBareModuleId,
     plugins: [
       babel({ exclude: /node_modules/, sourceMaps: true }),
@@ -47,7 +49,7 @@ const cjs = [
 const esm = [
   {
     input: 'src/index.js',
-    output: { file: `dist/esm/${pkg.name}.js`, sourcemap: true, format: 'esm' },
+    output: { file: `dist/esm/${pkgName}.js`, sourcemap: true, format: 'esm' },
     external: isBareModuleId,
     plugins: [
       babel({
@@ -68,7 +70,7 @@ const umd = [
   {
     input: 'src/index.js',
     output: {
-      file: `dist/umd/${pkg.name}.js`,
+      file: `dist/umd/${pkgName}.js`,
       sourcemap: true,
       sourcemapPathTransform: relativePath =>
         relativePath.replace(/^.*?\/node_modules/, '../../node_modules'),
@@ -101,7 +103,7 @@ const umd = [
   {
     input: 'src/index.js',
     output: {
-      file: `dist/umd/${pkg.name}.min.js`,
+      file: `dist/umd/${pkgName}.min.js`,
       sourcemap: true,
       sourcemapPathTransform: relativePath =>
         relativePath.replace(/^.*?\/node_modules/, '../../node_modules'),
