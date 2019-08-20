@@ -24,16 +24,31 @@ import { useRef, useEffect } from 'react';
 const HIGH_RENDER_COUNT = 2;
 const WARN_COUNT = 1;
 const RESET_COUNT_INTERVAL = 1000;
+const SHOW_UNKNOWN_PROP_WARNING = true;
 
 function findChanges(prev, next) {
-  Object.entries(next).forEach(
-    ([key, val]) =>
-      prev[key] !== val &&
-      console.log(
-        `Key %c ${key} %c has changed`,
-        'background: #FF5C5D; color: #F5F5F5; padding: 3px;',
-        'color: "inherit", background: "inherit"'
-      )
+  // Find the keys that have changed since last render
+  const changed = Object.entries(next)
+    .map(([key, val]) => (prev[key] !== val ? key : false))
+    .filter(Boolean);
+
+  // Are there any? Should we use singular or plural?
+  const count = changed.length;
+
+  if (!count) {
+    // There was a re-render but we're not tracking it
+    console.warn(
+      `An unknown data item has triggered a re-render. Chances are you're not providing it to %creact-whyupdate`,
+      'font-face: monospace; font-size: 0.65rem; font-style: italic;'
+    );
+    return;
+  }
+
+  // List all properties that have changed in this run
+  console.log(
+    `Key${count > 1 ? 's' : ''} %c ${changed.join(', ')} %c ${count > 1 ? 'have' : 'has'} changed`,
+    'background: #FF5C5D; color: #F5F5F5; padding: 3px;',
+    'color: "inherit", background: "inherit"'
   );
 }
 

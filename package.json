@@ -1,6 +1,6 @@
 {
   "name": "@modus/react-whyupdate",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "React hook that displays why a component has re-rendered",
   "main": "dist/cjs/react-whyupdate.js",
   "module": "dist/esm/react-whyupdate.js",

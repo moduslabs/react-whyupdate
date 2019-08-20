@@ -1,8 +1,8 @@
 {
   "dist/esm/react-whyupdate.js": {
-    "bundled": 2622,
-    "minified": 1221,
-    "gzipped": 664,
+    "bundled": 3008,
+    "minified": 1313,
+    "gzipped": 712,
     "treeshaked": {
       "rollup": {
         "code": 63,
@@ -14,9 +14,9 @@
     }
   },
   "dist/umd/react-whyupdate.js": {
-    "bundled": 3786,
-    "minified": 1556,
-    "gzipped": 827
+    "bundled": 4186,
+    "minified": 1648,
+    "gzipped": 876
   },
   "dist/umd/react-whyupdate.min.js": {
     "bundled": 532,
