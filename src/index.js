@@ -37,10 +37,12 @@ function findChanges(prev, next) {
 
   if (!count) {
     // There was a re-render but we're not tracking it
-    console.warn(
-      `An unknown data item has triggered a re-render. Chances are you're not providing it to %creact-whyupdate`,
-      'font-face: monospace; font-size: 0.65rem; font-style: italic;'
-    );
+    if (SHOW_UNKNOWN_PROP_WARNING === true) {
+      console.warn(
+        `An unknown data item has triggered a re-render. Chances are you're not providing it to %creact-whyupdate`,
+        'font-face: monospace; font-size: 0.65rem; font-style: italic;'
+      );
+    }
     return;
   }
 
