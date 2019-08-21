@@ -26,47 +26,48 @@ const WARN_COUNT = 1;
 const RESET_COUNT_INTERVAL = 1000;
 const SHOW_UNKNOWN_PROP_WARNING = true;
 
+// Find the keys that have changed since last render
 function findChanges(prev, next) {
-  // Find the keys that have changed since last render
-  const changed = Object.entries(next)
+  return Object.entries(next)
     .map(([key, val]) => (prev[key] !== val ? key : false))
     .filter(Boolean);
+}
 
-  // Are there any? Should we use singular or plural?
-  const count = changed.length;
-
-  if (!count) {
-    // There was a re-render but we're not tracking it
-    if (SHOW_UNKNOWN_PROP_WARNING === true) {
-      console.warn(
-        `An unknown data item has triggered a re-render. Chances are you're not providing it to %creact-whyupdate`,
-        'font-face: monospace; font-size: 0.65rem; font-style: italic;'
-      );
-    }
-    return;
+// Log or Warn about the changes
+function logChanges(changes) {
+  const count = changes.length;
+  if (!count && SHOW_UNKNOWN_PROP_WARNING) {
+    console.warn(
+      `An unknown data item has triggered a re-render. Chances are you're not providing it to %creact-whyupdate`,
+      'font-face: monospace; font-size: 0.65rem; font-style: italic;'
+    );
   }
-
-  // List all properties that have changed in this run
-  console.log(
-    `Key${count > 1 ? 's' : ''} %c ${changed.join(', ')} %c ${count > 1 ? 'have' : 'has'} changed`,
-    'background: #FF5C5D; color: #F5F5F5; padding: 3px;',
-    'color: "inherit", background: "inherit"'
-  );
+  else if (count) {
+    console.log(
+      `Key${count > 1 ? 's' : ''} %c ${changes.join(', ')} %c ${count > 1 ? 'have' : 'has'} changed`,
+      'background: #FF5C5D; color: #F5F5F5; padding: 3px;',
+      'color: "inherit", background: "inherit"'
+    );
+  }
 }
 
 function useWhyUpdate(...args) {
   if (process.env.NODE_ENV !== 'production') {
     // Initialize ref for the initial render
-    const ref = useRef({ time: Date.now(), count: 1, args, warn: undefined });
+    const ref = useRef({ time: Date.now(), count: 0, args, warn: undefined });
 
     // Previous props will be in ref.current.args
     const prev = ref.current.args;
 
     // compare previous and next only if previous exist
-    if (prev && Array.isArray(args)) {
+    if (prev && Array.isArray(args) && ref.current.count) {
+      
       // compare previous argument to the next one. Make sure indices are matched
       if (ref.current.count >= WARN_COUNT) {
-        args.forEach((next, idx) => findChanges(prev[idx], next));
+        const changes = args
+          .map((next, idx) => findChanges(prev[idx], next))
+          .reduce((acc, arg) => acc.concat(arg));
+        logChanges(changes);
       }
 
       // if it's been a while since the last re-render then it's a good time to reset update count
