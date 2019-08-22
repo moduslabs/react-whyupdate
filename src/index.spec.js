@@ -3,6 +3,7 @@ import { create } from 'react-test-renderer';
 import useWhyUpdate from './index';
 
 const log = jest.spyOn(console, 'log').mockImplementation();
+const warn = jest.spyOn(console, 'warn').mockImplementation();
 
 const HINT_REGXP = /opportunity for improvement/;
 
@@ -16,6 +17,18 @@ const ThreeUpdates = (props = {}) => {
   useWhyUpdate(props, { count });
 
   return <div>{count}</div>;
+};
+
+const OneUntrackedUpdate = (props = {}) => {
+  const [untrackedCount, setUntrackedCount] = useState(0);
+  useEffect(() => {
+    if (untrackedCount < 1) {
+      setUntrackedCount(untrackedCount + 1);
+    }
+  }, [untrackedCount]);
+  useWhyUpdate(props);
+
+  return <div>{untrackedCount}</div>;
 };
 
 const NoState = props => {
@@ -45,6 +58,19 @@ describe('useWhyChange', () => {
     await pause(100);
     // log called once for each update (3) and another time for the warning
     expect(log).toHaveBeenCalledTimes(3);
+    // clear any stale timeouts
+    Array.from(new Array(10), (_, idx) => clearTimeout(idx));
+    log.mockClear();
+  });
+
+  it(`renders with one untracked state update`, async () => {
+    create(<OneUntrackedUpdate />);
+    // give it a cycle to process updates
+    await pause(100);
+    // log called zero times
+    expect(log).toHaveBeenCalledTimes(0);
+    // warn called once for each untracked update (1) 
+    expect(warn).toHaveBeenCalledTimes(1);
     // clear any stale timeouts
     Array.from(new Array(10), (_, idx) => clearTimeout(idx));
     log.mockClear();
