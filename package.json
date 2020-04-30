@@ -38,7 +38,7 @@
   "user": "grgur",
   "license": "MIT",
   "devDependencies": {
-    "@babel/plugin-transform-runtime": "^7.5.5",
+    "@babel/plugin-transform-runtime": "^7.9.6",
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
     "babel-eslint": "10.1.0",
